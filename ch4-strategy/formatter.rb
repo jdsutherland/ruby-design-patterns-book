@@ -2,41 +2,39 @@ class Report
   attr_reader :title, :text
   attr_accessor :formatter
 
-  def initialize(formatter)
+  def initialize(&formatter)
     @title = 'Monthly Report'
     @text =  ['Things are going', 'really, really well.']
     @formatter = formatter
   end
 
-  def output_report()
-    @formatter.output_report(self)
+  def output_report
+    @formatter.call(self)
   end
 end
 
-class HTMLFormatter
-  def output_report(context)
-    puts('<html>')
-    puts('  <head>')
-    # Output The rest of the report ...
-    puts("    <title>#{context.title}</title>")
-    puts('  </head>')
-    puts('  <body>')
+HTML_FORMATTER = lambda do |context|
+  puts('<html>')
+  puts('  <head>')
+  puts("    <title>#{context.title}</title>")
+  puts('  </head>')
+  puts('  <body>')
 
-    context.text.each do |line|
-      puts("    <p>#{line}</p>")
-    end
-
-    puts('  </body>')
-    puts('</html>')
+  context.text.each do |line|
+    puts("    <p>#{line}</p>" )
   end
+
+  puts('  </body>')
+  puts
 end
 
-class PlainTextFormatter
-  def output_report(context)
-    puts("***** #{context.title} *****")
+# example calling html
+report = Report.new &HTML_FORMATTER
+report.output_report
 
-    context.text.each do |line|
-      puts(line)
-    end
+report = Report.new do |context|
+  puts("***** #{context.title} *****")
+  context.text.each do |line|
+    puts(line)
   end
 end

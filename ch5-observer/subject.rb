@@ -1,4 +1,4 @@
-class Subject
+module Subject
   def initialize
     @observers = []
   end

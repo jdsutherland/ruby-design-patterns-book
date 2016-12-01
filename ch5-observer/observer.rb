@@ -2,10 +2,16 @@ class Employee
   attr_reader :name
   attr_accessor :title, :salary
 
-  def initialize(name, title, salary)
+  def initialize(name, title, salary, payroll)
     @name = name
     @title = title
     @salary = salary
+    @payroll = payroll
+  end
+
+  def salary=(new_salary)
+    @salary = new_salary
+    @payroll.update(self)
   end
 end
 
@@ -16,5 +22,5 @@ class Payroll
   end
 end
 
-fred = Employee.new("Fred", "Crane Operator", 30000.0)
-fred.salary=35000.0
+fred = Employee.new("Fred", "Crane Operator", 30000.0, Payroll.new)
+fred.salary = 35000.0

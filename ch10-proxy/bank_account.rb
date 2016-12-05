@@ -15,20 +15,13 @@ class BankAccount
 end
 
 class BankAccountProxy
-  def initialize(real_object)
-    @real_object = real_object
+  def initialize(real_account)
+    @subject = real_account
   end
 
-  def balance
-    @real_object.balance
-  end
-
-  def deposit(amount)
-    @real_object.deposit(amount)
-  end
-
-  def withdraw(amount)
-    @real_object.withdraw(amount)
+  def method_missing(meth, *args)
+    puts "Delegating #{meth} message to subject."
+    @subject.send(meth, *args)
   end
 end
 
@@ -39,3 +32,4 @@ account.withdraw(10)
 proxy = BankAccountProxy.new(account)
 proxy.deposit(50)
 proxy.withdraw(10)
+puts("account balance is now: #{proxy.balance}")

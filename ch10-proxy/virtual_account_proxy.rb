@@ -5,21 +5,15 @@ class VirtualAccountProxy
     @creation_block = creation_block
   end
 
-  def deposit(amount)
-    subject.deposit(amount)
-  end
-
-  def withdraw(amount)
-    subject.withdraw(amount)
-  end
-
-  def balance
-    subject.balance
-  end
-
   def subject
     @subject ||= @creation_block.call
+  end
+
+  def method_missing(meth, *args)
+    puts "Delegating #{meth} message to subject."
+    @subject.send(meth, *args)
   end
 end
 
 account = VirtualAccountProxy.new { BankAccount.new(10) }
+arr = VirtualAccountProxy.new { Array.new }

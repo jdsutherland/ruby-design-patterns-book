@@ -6,18 +6,9 @@ class BankAccountProtectionProxy
     @owner_name = owner_name
   end
 
-  def balance
-    @real_object.balance
-  end
-
-  def deposit(amount)
-    check_access
-    @real_object.deposit(amount)
-  end
-
-  def withdraw(amount)
-    check_access
-    @real_object.withdraw(amount)
+  def method_missing(meth, *args)
+    puts "Delegating #{meth} message to subject."
+    @subject.send(meth, *args)
   end
 
   def check_access

@@ -1,23 +1,19 @@
 class SlickButton
   attr_reader :command
 
-  def initialize(command)
-    @command = command
+  def initialize(&block)
+    @command = block
   end
 
   # lots of button drawing and mgmt code omitted
 
   def on_button_push
-    @command.execute if @command
+    @command.call if @command
   end
 end
 
-class SaveCommand
-  def execute
-    #
-    # Save the current document
-    #
-  end
+save_button = SlickButton.new do
+  #
+  # Save the current document
+  #
 end
-
-save_button = SlickButton.new(SaveCommand.new)

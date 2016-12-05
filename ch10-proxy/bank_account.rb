@@ -14,9 +14,12 @@ class BankAccount
   end
 end
 
+require "etc"
+
 class BankAccountProxy
-  def initialize(real_object)
+  def initialize(real_object, owner_name)
     @real_object = real_object
+    @owner_name = owner_name
   end
 
   def balance
@@ -24,11 +27,19 @@ class BankAccountProxy
   end
 
   def deposit(amount)
+    check_access
     @real_object.deposit(amount)
   end
 
   def withdraw(amount)
+    check_access
     @real_object.withdraw(amount)
+  end
+
+  def check_access
+    if Etc.getlogin != @owner_name
+      raise "Illegal access: #{Etc.getlogin} cannot access account."
+    end
   end
 end
 
@@ -36,6 +47,7 @@ account = BankAccount.new(100)
 account.deposit(50)
 account.withdraw(10)
 
-proxy = BankAccountProxy.new(account)
-proxy.deposit(50)
-proxy.withdraw(10)
+# remove since protection
+# proxy = BankAccountProxy.new(account)
+# proxy.deposit(50)
+# proxy.withdraw(10)

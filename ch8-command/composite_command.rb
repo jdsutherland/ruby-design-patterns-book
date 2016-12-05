@@ -19,6 +19,10 @@ class CompositeCommand < Command
     @commands.each(&:execute)
   end
 
+  def unexecute
+    @commands.reverse.each(&:unexecute)
+  end
+
   def description
     description = ""
     @commands.each { |cmd| description += cmd.description + "\n" }
@@ -32,5 +36,8 @@ cmds.add_command(CreateFile.new("file1.txt", "hello world\n"))
 cmds.add_command(CopyFile.new("file1.txt", "file2.txt"))
 cmds.add_command(DeleteFile.new("file1.txt"))
 
-cmds.execute
 puts(cmds.description)
+cmds.execute
+
+sleep 1.5
+cmds.unexecute

@@ -1,20 +1,22 @@
 require_relative "duck"
+require_relative "frog"
 
 class Pond
-  def initialize(number_ducks)
-    @ducks = []
-    number_ducks.times do |i|
-      duck = Duck.new("Duck#{i}")
-      @ducks << duck
+  def initialize(number_animals)
+    @animals = []
+    number_animals.times do |i|
+      animal = new_animal("Animal#{i}")
+      @animals << animal
     end
   end
 
+  def new_animal(_name)
+    raise NotImplementedError, "This #{self.class} cannot respond to:"
+  end
+
   def simulate_one_day
-    @ducks.each(&:speak)
-    @ducks.each(&:eat)
-    @ducks.each(&:sleep)
+    @animals.each(&:speak)
+    @animals.each(&:eat)
+    @animals.each(&:sleep)
   end
 end
-
-pond = Pond.new(3)
-pond.simulate_one_day

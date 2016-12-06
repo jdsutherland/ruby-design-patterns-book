@@ -1,14 +1,14 @@
-require_relative "algae"
-require_relative "frog"
+require_relative "duck"
 require_relative "pond"
+require_relative "water_lily"
 
-class FrogAlgaePond < Pond
+class DuckWaterLilyPond < Pond
   def new_organism(type, name)
     case type
     when :animal
-      Frog.new(name)
+      Duck.new(name)
     when :plant
-      Algae.new(name)
+      WaterLily.new(name)
     else
       raise "Unknown organism type: #{type}"
     end

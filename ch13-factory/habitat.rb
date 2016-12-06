@@ -1,7 +1,7 @@
 require_relative "duck"
 require_relative "frog"
 
-class Pond
+class Habitat
   def initialize(number_animals, animal_class, number_plants, plant_class)
     @animal_class = animal_class
     @plant_class = plant_class

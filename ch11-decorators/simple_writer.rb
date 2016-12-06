@@ -1,7 +1,7 @@
 # Concrete component
 class SimpleWriter
   def initialize(path)
-    @file = File.open(path, 'w')
+    @file = File.open(path, "w")
   end
 
   def write_line(line)

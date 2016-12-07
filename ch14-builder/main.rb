@@ -1,5 +1,5 @@
 require_relative "computer"
-require_relative "computer_builder"
+require_relative "desktop_builder"
 
 # Build a cpu
 motherboard = Motherboard.new(TurboCPU.new, 4000)
@@ -14,7 +14,7 @@ computer = Computer.new(:lcd, motherboard, drives)
 # tedious to "build" a Computer object
 
 # using Builder
-builder = ComputerBuilder.new
+builder = DesktopBuilder.new
 builder.turbo
 builder.add_cd(true)
 builder.add_dvd
